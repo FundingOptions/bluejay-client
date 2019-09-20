@@ -11,7 +11,7 @@ flit-install:
 
 pyenv-rehash:
 	@# as we don't use pip, we have to manually rehash the environment.
-	command -v pyenv && pyenv rehash
+	command -v pyenv && pyenv rehash ||:
 
 ##@ Code Checks
 
