@@ -36,3 +36,11 @@ lint:
 	black --check $(SRC_DIRS) tests
 	@# don't run mypy on the tests, since it doesn't work well with pytest yet
 	mypy $(SRC_DIRS)
+
+##@ Publishing
+
+# We default to the Test PyPI, to avoid publishing accidentally.
+PYPI_INDEX_NAME ?= testpypi
+
+publish:
+	flit --repository  '$(PYPI_INDEX_NAME)' publish

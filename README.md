@@ -124,3 +124,29 @@ The bulk of the linting can be adhered to by running `make autofix`.
 
 You can lint your code by running `make lint`.
 
+## Publishing
+
+We use [flit][flit] for publishing to the PyPI.
+
+By default, we publish to the test PyPI. This is to prevent accidental publishing.
+
+You need to configure your `~/.pypirc` file. An example is:
+
+```ini
+[distutils]
+index-servers =
+   pypi
+   testpypi
+
+[pypi]
+repository = https://upload.pypi.org/legacy/
+
+[testpypi]
+repository = https://test.pypi.org/legacy/
+```
+
+To do an actual publish, run `PYPI_INDEX_NAME=pypi make publish`.
+This will guide you through the process.
+
+
+[flit]: https://flit.readthedocs.io/
