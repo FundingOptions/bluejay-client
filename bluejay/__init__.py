@@ -10,8 +10,7 @@ Currently supports:
 __version__ = "0.1"
 
 from . import backend, client, event
+
 Client = client.Client
 
-__all__ = (
-    'Client',
-)
+__all__ = ("Client",)

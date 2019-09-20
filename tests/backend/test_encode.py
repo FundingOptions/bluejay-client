@@ -36,7 +36,5 @@ def test_json_encoder_encodes_datetimes(faker, dt, expected):
     key = faker.pystr()
     input = {key: dt}
     output = JSONEncoder().encode(input)
-    expected_output = '{{"{key}": "{expected}"}}'.format(
-        key=key, expected=expected,
-    )
+    expected_output = '{{"{key}": "{expected}"}}'.format(key=key, expected=expected)
     assert expected_output == output

@@ -1,4 +1,3 @@
-
 from .backend.command import SendEvent
 from .backend.interface import IBackend
 from .interface import IEvent

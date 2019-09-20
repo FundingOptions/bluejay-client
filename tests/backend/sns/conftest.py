@@ -33,8 +33,7 @@ def topic_arn(faker):
     account_id = faker.pyint()
     topic_name = faker.pystr()
     return "arn:aws:sns:eu-west-1:{account_id}:{topic_name}".format(
-        account_id=account_id,
-        topic_name=topic_name,
+        account_id=account_id, topic_name=topic_name
     )
 
 

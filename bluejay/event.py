@@ -4,11 +4,8 @@ from typing import Dict, List, Union
 import attr
 from typing_extensions import TypedDict
 
-__all__ = (
-    'AppReceived',
-    'MatchOccurred',
-    'ProductSelected',
-)
+__all__ = ("AppReceived", "MatchOccurred", "ProductSelected")
+
 
 @attr.s(slots=True)
 class AppReceived:
