@@ -45,7 +45,7 @@ uuid_to_expected = [
     ),
 ]
 
-random_to_expected = [
+generic_to_expected = [
     ({"a": "b"}, '{"a": "b"}'),
     ({"c": 1}, '{"c": 1}'),
     ({"d": {"e": "f"}}, '{"d": {"e": "f"}}'),
@@ -62,18 +62,6 @@ def test_datetime_is_converted_to_rfc3339_format(dt, expected):
     assert expected == formatted
 
 
-@pytest.mark.parametrize(["uuid", "expected"], uuid_to_expected)
-def test_uuid_is_converted_to_string(uuid, expected):
-    formatted = str(uuid)
-    assert expected == formatted
-
-
-@pytest.mark.parametrize(["random", "expected"], random_to_expected)
-def test_uuid_is_converted_to_string(random, expected):
-    formatted = json.dumps(random)
-    assert expected == formatted
-
-
 @pytest.mark.parametrize(["dt", "expected"], date_time_to_expected)
 def test_json_encoder_encodes_datetimes(faker, dt, expected):
     key = faker.pystr()
@@ -81,6 +69,12 @@ def test_json_encoder_encodes_datetimes(faker, dt, expected):
     output = JSONEncoder().encode(input)
     expected_output = '{{"{key}": "{expected}"}}'.format(key=key, expected=expected)
     assert expected_output == output
+
+
+@pytest.mark.parametrize(["uuid", "expected"], uuid_to_expected)
+def test_uuid_is_converted_to_string(uuid, expected):
+    formatted = str(uuid)
+    assert expected == formatted
 
 
 @pytest.mark.parametrize(["uuid", "expected"], uuid_to_expected)
@@ -92,10 +86,16 @@ def test_json_encoder_encodes_uuid(faker, uuid, expected):
     assert expected_output == output
 
 
-@pytest.mark.parametrize(["random", "expected"], uuid_to_expected)
-def test_json_encoder_encodes_random(faker, random, expected):
+@pytest.mark.parametrize(["generic", "expected"], generic_to_expected)
+def test_generic_is_converted_to_string(generic, expected):
+    formatted = json.dumps(generic)
+    assert expected == formatted
+
+
+@pytest.mark.parametrize(["generic", "expected"], uuid_to_expected)
+def test_json_encoder_encodes_generic(faker, generic, expected):
     key = faker.pystr()
-    input = {key: random}
+    input = {key: generic}
     output = JSONEncoder().encode(input)
     expected_output = '{{"{key}": "{expected}"}}'.format(key=key, expected=expected)
     assert expected_output == output
