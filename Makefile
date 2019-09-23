@@ -41,6 +41,15 @@ lint:
 
 # We default to the Test PyPI, to avoid publishing accidentally.
 PYPI_INDEX_NAME ?= testpypi
+build_date := $(shell git show -s --format=%ct HEAD)
 
-publish:
+_set_date:
+	@# Set the date to be that of the last commit, to make our builds reproducible
+	@# https://flit.readthedocs.io/en/latest/reproducible.html
+	$(eval export SOURCE_DATE_EPOCH=$(build_date))
+
+build: _set_date
+	flit build
+
+publish: _set_date build
 	flit --repository  '$(PYPI_INDEX_NAME)' publish
