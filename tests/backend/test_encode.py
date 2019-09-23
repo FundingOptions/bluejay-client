@@ -1,4 +1,7 @@
+import json
+
 from datetime import datetime, timedelta, timezone
+from uuid import UUID
 
 import pytest
 
@@ -24,10 +27,39 @@ date_time_to_expected = [
 ]
 # fmt: on
 
+uuid_to_expected = [
+    (UUID('634f6fb9-4532-49b0-8f0a-ebf9faf8f588'), '634f6fb9-4532-49b0-8f0a-ebf9faf8f588'),
+    (UUID('4d227dc1-1b5a-46c7-87e8-127fa6fc8046'), '4d227dc1-1b5a-46c7-87e8-127fa6fc8046'),
+    (UUID('7592973f-c365-4e2f-84fe-6403b6af7a4f'), '7592973f-c365-4e2f-84fe-6403b6af7a4f'),
+    (UUID('bede6506-a4eb-4ea7-877a-769a00b23f76'), 'bede6506-a4eb-4ea7-877a-769a00b23f76'),
+]
+
+random_to_expected = [
+    ({'a': 'b'}, '{"a": "b"}'),
+    ({'c': 1}, '{"c": 1}'),
+    ({'d': {'e': 'f'}}, '{"d": {"e": "f"}}'),
+]
+
+
+class Sentinel:
+    pass
+
 
 @pytest.mark.parametrize(["dt", "expected"], date_time_to_expected)
 def test_datetime_is_converted_to_rfc3339_format(dt, expected):
     formatted = datetime_to_rfc3339(dt)
+    assert expected == formatted
+
+
+@pytest.mark.parametrize(["uuid", "expected"], uuid_to_expected)
+def test_uuid_is_converted_to_string(uuid, expected):
+    formatted = str(uuid)
+    assert expected == formatted
+
+
+@pytest.mark.parametrize(["random", "expected"], random_to_expected)
+def test_uuid_is_converted_to_string(random, expected):
+    formatted = json.dumps(random)
     assert expected == formatted
 
 
@@ -38,3 +70,26 @@ def test_json_encoder_encodes_datetimes(faker, dt, expected):
     output = JSONEncoder().encode(input)
     expected_output = '{{"{key}": "{expected}"}}'.format(key=key, expected=expected)
     assert expected_output == output
+
+
+@pytest.mark.parametrize(["uuid", "expected"], uuid_to_expected)
+def test_json_encoder_encodes_uuid(faker, uuid, expected):
+    key = faker.pystr()
+    input = {key: uuid}
+    output = JSONEncoder().encode(input)
+    expected_output = '{{"{key}": "{expected}"}}'.format(key=key, expected=expected)
+    assert expected_output == output
+
+
+@pytest.mark.parametrize(["random", "expected"], uuid_to_expected)
+def test_json_encoder_encodes_random(faker, random, expected):
+    key = faker.pystr()
+    input = {key: random}
+    output = JSONEncoder().encode(input)
+    expected_output = '{{"{key}": "{expected}"}}'.format(key=key, expected=expected)
+    assert expected_output == output
+
+
+def test_type_error_on_unknown_types():
+    with pytest.raises(TypeError):
+        JSONEncoder().encode(Sentinel())
