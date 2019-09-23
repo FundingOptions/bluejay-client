@@ -1,5 +1,4 @@
 import json
-
 from datetime import datetime, timedelta, timezone
 from uuid import UUID
 
@@ -28,16 +27,28 @@ date_time_to_expected = [
 # fmt: on
 
 uuid_to_expected = [
-    (UUID('634f6fb9-4532-49b0-8f0a-ebf9faf8f588'), '634f6fb9-4532-49b0-8f0a-ebf9faf8f588'),
-    (UUID('4d227dc1-1b5a-46c7-87e8-127fa6fc8046'), '4d227dc1-1b5a-46c7-87e8-127fa6fc8046'),
-    (UUID('7592973f-c365-4e2f-84fe-6403b6af7a4f'), '7592973f-c365-4e2f-84fe-6403b6af7a4f'),
-    (UUID('bede6506-a4eb-4ea7-877a-769a00b23f76'), 'bede6506-a4eb-4ea7-877a-769a00b23f76'),
+    (
+        UUID("634f6fb9-4532-49b0-8f0a-ebf9faf8f588"),
+        "634f6fb9-4532-49b0-8f0a-ebf9faf8f588",
+    ),
+    (
+        UUID("4d227dc1-1b5a-46c7-87e8-127fa6fc8046"),
+        "4d227dc1-1b5a-46c7-87e8-127fa6fc8046",
+    ),
+    (
+        UUID("7592973f-c365-4e2f-84fe-6403b6af7a4f"),
+        "7592973f-c365-4e2f-84fe-6403b6af7a4f",
+    ),
+    (
+        UUID("bede6506-a4eb-4ea7-877a-769a00b23f76"),
+        "bede6506-a4eb-4ea7-877a-769a00b23f76",
+    ),
 ]
 
 random_to_expected = [
-    ({'a': 'b'}, '{"a": "b"}'),
-    ({'c': 1}, '{"c": 1}'),
-    ({'d': {'e': 'f'}}, '{"d": {"e": "f"}}'),
+    ({"a": "b"}, '{"a": "b"}'),
+    ({"c": 1}, '{"c": 1}'),
+    ({"d": {"e": "f"}}, '{"d": {"e": "f"}}'),
 ]
 
 
