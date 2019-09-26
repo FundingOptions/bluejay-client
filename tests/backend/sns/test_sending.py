@@ -10,9 +10,7 @@ def expected_json(send_event_command):
 
     # The message should be wrapped up in a {default: <message>} wrapper
     # This is also encoded.
-    return JSONEncoder().encode({
-        "default": encoded
-    })
+    return JSONEncoder().encode({"default": encoded})
 
 
 @pytest.fixture
