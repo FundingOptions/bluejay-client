@@ -7,7 +7,7 @@ Currently supports:
 - Stdout (via Logging)
 """
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 from . import backend, client, event
 

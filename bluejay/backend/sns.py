@@ -21,6 +21,8 @@ class SNSBackend:
             TopicArn=self.topic_arn,
             MessageStructure="json",
             Subject=message.event_name,
-            Message=JSONEncoder().encode(message.payload),
+            Message=JSONEncoder().encode({
+                "default": JSONEncoder().encode(message.payload)
+            }),
         )
         return SendResponse(success=True)

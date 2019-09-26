@@ -6,9 +6,13 @@ from bluejay.backend.encode import JSONEncoder
 @pytest.fixture
 def expected_json(send_event_command):
     obj = send_event_command.payload
+    encoded = JSONEncoder().encode(obj)
 
-    # We know the encoder works, due to :tests.backend.test_encode:, so use it here for convenience.
-    return JSONEncoder().encode(obj)
+    # The message should be wrapped up in a {default: <message>} wrapper
+    # This is also encoded.
+    return JSONEncoder().encode({
+        "default": encoded
+    })
 
 
 @pytest.fixture
