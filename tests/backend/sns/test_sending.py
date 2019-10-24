@@ -1,6 +1,3 @@
-import gzip
-from base64 import b64encode
-
 import pytest
 
 from bluejay.backend import SNSBackend

@@ -1,5 +1,4 @@
 import gzip
-import json
 from base64 import b64encode
 
 from .command import SendEvent, SendResponse
