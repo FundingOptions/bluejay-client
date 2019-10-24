@@ -1,3 +1,6 @@
+import gzip
+from base64 import b64encode
+
 import pytest
 
 from bluejay.backend.encode import JSONEncoder
@@ -6,6 +9,12 @@ from bluejay.backend.encode import JSONEncoder
 @pytest.fixture
 def expected_json(send_event_command):
     obj = send_event_command.payload
+
+    obj = JSONEncoder().encode(obj)
+    obj = obj.encode()
+    obj = gzip.compress(obj)
+    obj = b64encode(obj)
+    obj = obj.decode()
     encoded = JSONEncoder().encode(obj)
 
     # The message should be wrapped up in a {default: <message>} wrapper

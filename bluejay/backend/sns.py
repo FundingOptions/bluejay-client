@@ -1,3 +1,7 @@
+import gzip
+import json
+from base64 import b64encode
+
 from .command import SendEvent, SendResponse
 from .encode import JSONEncoder
 
@@ -17,6 +21,12 @@ class SNSBackend:
         return cls(client, topic_arn)
 
     def send(self, message: SendEvent) -> SendResponse:
+        payload = JSONEncoder().encode(message.payload)
+        payload = payload.encode()
+        payload = gzip.compress(payload)
+        payload = b64encode(payload)
+        payload = payload.decode()
+        message.payload = payload
         self.client.publish(
             TopicArn=self.topic_arn,
             MessageStructure="json",
