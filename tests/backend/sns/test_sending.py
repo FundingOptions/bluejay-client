@@ -1,7 +1,6 @@
 import pytest
 
 from bluejay.backend import SNSBackend
-from bluejay.backend.encode import JSONEncoder
 
 
 @pytest.fixture
