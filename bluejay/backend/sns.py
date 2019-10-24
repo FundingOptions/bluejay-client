@@ -20,22 +20,18 @@ class SNSBackend:
         return cls(client, topic_arn)
 
     @classmethod
-    def compress(cls, payload: dict) -> str:
-        payload = JSONEncoder().encode(payload)
-        payload = payload.encode()
-        payload = gzip.compress(payload)
-        payload = b64encode(payload)
-        payload = payload.decode()
-        return payload
+    def compress(cls, payload: str) -> str:
+        compressed_payload = gzip.compress(payload.encode())
+        b64_payload = b64encode(compressed_payload)
+        return b64_payload.decode()
 
     def send(self, message: SendEvent) -> SendResponse:
-        payload = message.payload
-        payload = self.compress(payload)
-        message.payload = payload
+        payload = JSONEncoder().encode(message.payload)
+        compressed_payload = self.compress(payload)
         self.client.publish(
             TopicArn=self.topic_arn,
             MessageStructure="json",
             Subject=message.event_name,
-            Message=message.payload,
+            Message=compressed_payload,
         )
         return SendResponse(success=True)
