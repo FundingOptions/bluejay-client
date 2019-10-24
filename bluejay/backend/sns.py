@@ -20,19 +20,23 @@ class SNSBackend:
         client = boto3.client("sns")
         return cls(client, topic_arn)
 
-    def send(self, message: SendEvent) -> SendResponse:
-        payload = JSONEncoder().encode(message.payload)
+    @classmethod
+    def compress(cls, payload: dict) -> str:
+        payload = JSONEncoder().encode(payload)
         payload = payload.encode()
         payload = gzip.compress(payload)
         payload = b64encode(payload)
         payload = payload.decode()
+        return payload
+
+    def send(self, message: SendEvent) -> SendResponse:
+        payload = message.payload
+        payload = self.compress(payload)
         message.payload = payload
         self.client.publish(
             TopicArn=self.topic_arn,
             MessageStructure="json",
             Subject=message.event_name,
-            Message=JSONEncoder().encode(
-                {"default": JSONEncoder().encode(message.payload)}
-            ),
+            Message=message.payload,
         )
         return SendResponse(success=True)
