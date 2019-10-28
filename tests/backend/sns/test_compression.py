@@ -8,13 +8,13 @@ from bluejay.backend.encode import JSONEncoder
 
 
 @pytest.fixture
-def expected_json(send_event_command):
+def expected_payload(send_event_command):
     obj = send_event_command.payload
 
     return SNSBackend.compress(JSONEncoder().encode(obj))
 
 
-def test_compression_duplicate_code(send_event_command, expected_json):
+def test_compression_duplicate_code(send_event_command, expected_payload):
     payload = send_event_command.payload
 
     json_payload = JSONEncoder().encode(payload)
@@ -23,4 +23,4 @@ def test_compression_duplicate_code(send_event_command, expected_json):
     b64_payload = b64encode(compressed_string)
     compressed_payload = b64_payload.decode()
 
-    assert compressed_payload == expected_json
+    assert compressed_payload == expected_payload
