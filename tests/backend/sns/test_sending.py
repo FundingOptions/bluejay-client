@@ -1,16 +1,14 @@
 import pytest
 
+from bluejay.backend import SNSBackend
 from bluejay.backend.encode import JSONEncoder
 
 
 @pytest.fixture
 def expected_json(send_event_command):
     obj = send_event_command.payload
-    encoded = JSONEncoder().encode(obj)
 
-    # The message should be wrapped up in a {default: <message>} wrapper
-    # This is also encoded.
-    return JSONEncoder().encode({"default": encoded})
+    return SNSBackend.compress(JSONEncoder().encode(obj))
 
 
 @pytest.fixture
