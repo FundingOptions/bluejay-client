@@ -28,12 +28,7 @@ def test_backend_takes_a_SendEvent_command(
     sns_stub.add_response(
         "publish",
         {"MessageId": faker.pystr()},
-        {
-            "TopicArn": topic_arn,
-            "Message": expected_json,
-            "Subject": expected_subject,
-            "MessageStructure": "json",
-        },
+        {"TopicArn": topic_arn, "Message": expected_json, "Subject": expected_subject,},
     )
     result = backend.send(send_event_command)
     assert result.success is True

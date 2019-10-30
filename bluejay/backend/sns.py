@@ -30,7 +30,6 @@ class SNSBackend:
         compressed_payload = self.compress(payload)
         self.client.publish(
             TopicArn=self.topic_arn,
-            MessageStructure="json",
             Subject=message.event_name,
             Message=compressed_payload,
         )
