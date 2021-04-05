@@ -23,11 +23,13 @@ def input_data(faker):
 @pytest.fixture
 def build_match(faker):
     def inner():
-        criteria_names = faker.pylist(3, True, "str")
+        criteria_names = faker.pylist(3, True, ["str"])
         return {
             "score": faker.pyint(),
             "breakdown": {name: faker.pyint() for name in criteria_names},
-            "criteria": {name: faker.pydict(3, True, "int") for name in criteria_names},
+            "criteria": {
+                name: faker.pydict(3, True, ["int"]) for name in criteria_names
+            },
             "product_id": str(faker.pyint()),
             "product_name": faker.pystr(),
             "product_lender_name": faker.pystr(),

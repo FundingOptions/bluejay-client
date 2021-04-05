@@ -12,7 +12,7 @@ def event_name(faker):
 
 @pytest.fixture
 def event_payload(faker):
-    return faker.pydict(10, True, *_expected_value_types)
+    return faker.pydict(10, True, _expected_value_types)
 
 
 @pytest.fixture

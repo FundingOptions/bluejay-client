@@ -10,7 +10,7 @@ def faker():
 @pytest.fixture(scope="function", autouse=True)
 def stub_aws_credentials(monkeypatch):
     """Prevent accidentally firing off actual AWS commands
-    
+
     This is a fail safe. All AWS calls should be stubbed already.
     """
     monkeypatch.setenv("AWS_ACCESS_KEY_ID", "testing")
