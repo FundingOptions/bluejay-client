@@ -106,7 +106,7 @@ Pytest is used as the testing framework, and tests are structured to loosely def
 Coverage reports are generated in an effort to identify untested code.
 Remember that your tests are **not** complete until all your expected behaviours are covered.
 
-In CI, `tox` is used to ensure we work across Python 3.5-3.7.
+In CI, `tox` is used to ensure we work across Python 3.5-3.9.
 
 In development, you can run `make test`, which is the equivilant of running `python -m pytest`
 

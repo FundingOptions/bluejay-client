@@ -15,7 +15,7 @@ class SNSBackend:
         try:
             import boto3  # type: ignore
         except ImportError:
-            raise NotImplemented("Boto3 is required to use the SNS Backend")
+            raise NotImplementedError("Boto3 is required to use the SNS Backend")
         client = boto3.client("sns")
         return cls(client, topic_arn)
 
